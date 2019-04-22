@@ -22,7 +22,17 @@ class Timeline:
             action.update()
         self.running = [action for action in self.running if not action.isDone()]
 
-    def cueInSeconds(self, seconds, lambdaFunction=None, action=None):
+    def clearScheduledActions(self):
+        self.queued = []
+
+    def cue(self, lambdaFunction=None, action=None):
+        if lambdaFunction is not None:
+            lambdaFunction()
+        elif action is not None:
+            self.running.append(action)
+            action.start()
+
+    def cueInSeconds(self, seconds: float, lambdaFunction=None, action=None):
         if lambdaFunction is not None:
             action = SimpleAction(lambdaFunction)
             action.triggerMicros = TimeUtil.getMicrosInFuture(seconds)

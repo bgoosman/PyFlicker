@@ -1,6 +1,6 @@
 import liblo
 
-def blackhole(func):
+def ignoreOsError(func):
     def inner(*args, **kwargs):
         try:
             func(*args, **kwargs)
@@ -16,12 +16,11 @@ class EtcElement:
         self.lightMin = 0
         self.lightMax = 100
 
-    @blackhole
+    @ignoreOsError
     def setChannel(self, channel, level):
         message = '/eos/chan/{}'.format(channel)
-        print(message + ' ' + str(level))
         liblo.send(self.oscTarget, message, level)
 
     def blackout(self):
-        for i in range(120):
+        for i in range(self.channelMax):
             self.setChannel(i, 0)

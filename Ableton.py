@@ -16,6 +16,9 @@ class Ableton:
     def play(self):
         self.set.play()
 
+    def stop(self):
+        self.set.stop()
+
     def waitForNextBeat(self):
         self.set.wait_for_next_beat()
 
