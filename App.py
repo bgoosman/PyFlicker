@@ -6,7 +6,6 @@ from EtcElement import EtcElement
 from Ableton import Ableton
 from Timeline import Timeline
 
-
 class App:
     def __init__(self):
         self.lightBoard = EtcElement('169.254.1.42', 3000)
@@ -35,10 +34,16 @@ class App:
         self.ableton.stopClip('muffle', 'fumbling around')
         self.ableton.stopClip('piano treble drone', 'piano treble drone 1')
         self.ableton.stopClip('guitar', 'guitar 2')
+        self.ableton.stopClip('wavetable', '1')
+        self.ableton.stopClip('wavetable', '2')
+        self.ableton.stopClip('wavetable', '3')
+        self.ableton.stopClip('wavetable', '4')
+        self.ableton.stopClip('wavetable', '5')
         self.ableton.stopClip('grand piano', '1')
         self.ableton.stopClip('grand piano', '2')
         self.ableton.stopClip('grand piano', '3')
         self.ableton.stopClip('grand piano', '4')
+        self.ableton.stopClip('grand piano', '5')
         self.ableton.stopClip('piano bass drone', 'piano bass drone 1')
         self.ableton.stopClip('guitar drones', 'guitar drone uplifting')
         self.ableton.stopClip('violin', 'violin forward')
@@ -52,6 +57,7 @@ class App:
         self.lightBoard.blackout()
         self.ableton.playClip('muffle', 'fumbling around')
         self.ableton.playClip('grand piano', '1')
+        self.ableton.playClip('wavetable', '1')
         self.timeline.cueInSeconds(1, lambdaFunction=lambda: self.ableton.playClip('guitar drones', 'guitar drone uplifting'))
         self.timeline.cueInSeconds(1, action=self.fadeLights(self.allLightsUsed, 60.0, self.lightBoard.lightMin, self.lightBoard.lightMax))
         self.timeline.cueInSeconds(1, action=self.fadeVolume(self.ableton.getTrack('guitar drones'), 60, 0, 0.7))
@@ -61,15 +67,16 @@ class App:
         self.timeline.cueInSeconds(3 * 60, lambdaFunction=lambda: self.executeTransition2())
         self.timeline.cueInSeconds(4 * 60, lambdaFunction=lambda: self.executeTransition3())
         self.timeline.cueInSeconds(5 * 60, lambdaFunction=lambda: self.executeTransition4())
-        self.timeline.cueInSeconds(1, lambdaFunction=lambda: print('done!'))
 
     def executeTransition0(self):
         self.ableton.playClip('grand piano', '2')
+        self.ableton.playClip('wavetable', '2')
 
     def executeTransition1(self):
         self.ableton.playClip('guitar', 'guitar 2')
         self.ableton.playClip('piano bass drone', 'piano bass drone 1')
         self.ableton.playClip('grand piano', '3')
+        self.ableton.playClip('wavetable', '3')
         self.timeline.cue(action=self.filterSweepMaster(1.0, self.filterMax, self.filterMin))
         self.timeline.cueInSeconds(0.5, action=self.fadeLights(self.allLightsUsed, 0.5, self.lightNormal, self.lightMin))
         self.timeline.cueInSeconds(1.5, lambdaFunction=self.flickerLight(self.sideRight[1], 0.3, self.lightBoard.lightMin, self.lightBoard.lightMax))
@@ -78,6 +85,7 @@ class App:
 
     def executeTransition2(self):
         self.ableton.playClip('grand piano', '4')
+        self.ableton.playClip('wavetable', '4')
         self.timeline.cue(action=self.filterSweepMaster(1.0, self.filterMax, self.filterMin))
         self.timeline.cueInSeconds(0.5, action=self.fadeLights(self.allLightsUsed, 0.5, self.lightNormal, self.lightMin))
         self.timeline.cueInSeconds(1.5, lambdaFunction=self.flickerLight(self.sideRight[1], 0.3, self.lightBoard.lightMin, self.lightBoard.lightMax))
@@ -86,9 +94,10 @@ class App:
 
     def executeTransition3(self):
         self.ableton.playClip('grand piano', '5')
+        self.ableton.playClip('wavetable', '5')
         self.timeline.cue(action=self.filterSweepMaster(1.0, self.filterMax, self.filterMin))
         self.timeline.cueInSeconds(0.5, action=self.fadeLights(self.allLightsUsed, 0.5, self.lightNormal, self.lightMin))
-        self.timeline.cueInSeconds(1.5, lambdaFunction=self.flickerLight(self.sideRight[1], 0.3, self.lightBoard.lightMin, self.lightBoard.lightMax))
+        self.timeline.cueInSeconds(1.5, lambdaFunction=lambda: self.flickerLight(self.sideRight[1], 0.3, self.lightBoard.lightMin, self.lightBoard.lightMax))
         self.timeline.cueInSeconds(4.0, action=self.fadeLights(self.allLightsUsed, 2, self.lightBoard.lightMin, self.lightBoard.lightMax))
         self.timeline.cueInSeconds(4.0, action=self.filterSweepMaster(2.0, self.filterMin, self.filterMax))
         self.timeline.cueInSeconds(6, action=self.fadeLights(self.allLightsUsedExceptChannelTwo, 42, self.lightNormal, self.lightBoard.lightMin))
