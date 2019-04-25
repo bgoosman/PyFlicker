@@ -3,7 +3,7 @@ import live
 
 class Ableton:
     def __init__(self):
-        self.link = LinkToPy.LinkInterface('/Users/admin/workspace/python/carabiner/bin/Carabiner')
+        self.link = LinkToPy.LinkInterface('/Applications/Carabiner')
         self.set = live.Set()
         self.set.scan(scan_clip_names=True, scan_devices=True)
 

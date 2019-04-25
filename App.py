@@ -35,6 +35,7 @@ class App:
     def update(self):
         self.ableton.update()
         self.timeline.update()
+        self.lightBoard.update()
         time.sleep(0.1)
 
     def startPerformance(self):

@@ -21,6 +21,9 @@ class EtcElement:
         message = '/eos/chan/{}'.format(channel)
         liblo.send(self.oscTarget, message, level)
 
+    def update(self):
+        pass
+
     def blackout(self):
         for i in range(self.channelMax):
             self.setChannel(i, 0)
