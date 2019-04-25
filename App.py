@@ -1,14 +1,16 @@
 import time
 import live
+import os
 
 from Action import LerpAction
+from DmxLightBoard import DmxLightBoard
 from EtcElement import EtcElement
 from Ableton import Ableton
 from Timeline import Timeline
 
 class App:
     def __init__(self):
-        self.lightBoard = EtcElement('169.254.1.42', 3000)
+        self.lightBoard = self.makeLightBoard()
         self.ableton = Ableton()
         self.timeline = Timeline()
         self.filterMin = 60
@@ -21,6 +23,14 @@ class App:
         self.lightMin = 0
         self.lightMax = 100
         self.startPerformance()
+
+    def makeLightBoard(self):
+        lightBoardEnviron = os.environ['LIGHTBOARD']
+        if lightBoardEnviron == 'DMX':
+            return DmxLightBoard('port')
+        elif lightBoardEnviron == 'EtcElement':
+            return EtcElement('169.254.1.42', 3000)
+        raise Exception('Set LIGHTBOARD environ to DMX or EtcElement')
 
     def update(self):
         self.ableton.update()
